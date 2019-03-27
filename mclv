@@ -1,0 +1,20 @@
+#!/bin/bash
+
+IFS=-
+
+echo Enter a valid Mailchimp API key to see the lists in the associated account:
+
+read apikey shard
+
+unset ifs
+
+echo List Names:
+
+curl -ss --user name:$apikey https://$shard.api.mailchimp.com/3.0/lists?count=9999 | sudo jq -c '.lists | .[].name'
+
+echo Total Lists:
+
+curl -ss --user name:$apikey https://$shard.api.mailchimp.com/3.0/lists?count=9999 | sudo jq -c '.lists | length'
+
+echo Total Subscribers:
+curl -ss --user name:$apikey https://$shard.api.mailchimp.com/3.0/ | sudo jq -c '.total_subscribers'
